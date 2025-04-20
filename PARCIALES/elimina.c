@@ -79,6 +79,8 @@ void eliminarFila(char m[][COLS], int filaActual, int filas){
         }
     }
 
+    
+    // llenar la ultima fila con espacios
     for (int j = 0; j < COLS; j++) {
         m[filas - 1][j] = ' ';
     }
