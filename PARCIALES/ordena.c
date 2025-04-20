@@ -1,3 +1,5 @@
+/*PRIMER RECUPERATORIO 2023 1Q*/
+
 #include <stdio.h>
 #include <assert.h>
 
@@ -25,8 +27,7 @@ int main(void) {
 }
 
 void ordena(int vec[]){
-    if (vec[0] == -1) return;
-    
+    if (vec[0] == -1) return;    
     int i = 0;  // índice del último elemento mantenido
     int j = 1;  // índice del elemento actual
     
