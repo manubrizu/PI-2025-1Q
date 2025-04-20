@@ -18,9 +18,9 @@ int main() {
     };
     int vec1[M/2];
     bordes(m1, vec1);
-    assert(vec1[0] == 20);  // Borde exterior: 4 esquinas + 4 lados de 4 elementos
-    assert(vec1[1] == 12);  // Segundo borde: 4 esquinas + 4 lados de 2 elementos
-    assert(vec1[2] == 4);   // Borde central: solo las 4 esquinas
+    assert(vec1[0] == 20);  
+    assert(vec1[1] == 12);  
+    assert(vec1[2] == 4);   
 
     // Test 2: Matriz con valores incrementales
     int m2[M][M] = {
@@ -33,9 +33,9 @@ int main() {
     };
     int vec2[M/2];
     bordes(m2, vec2);
-    assert(vec2[0] == 370);  // Borde exterior: esquinas + bordes sin esquinas
-    assert(vec2[1] == 222);  // Segundo borde
-    assert(vec2[2] == 74);   // Borde central
+    assert(vec2[0] == 370);  
+    assert(vec2[1] == 222);  
+    assert(vec2[2] == 74);   
 
     // Test 3: Matriz con ceros en los bordes
     int m3[M][M] = {
@@ -48,9 +48,9 @@ int main() {
     };
     int vec3[M/2];
     bordes(m3, vec3);
-    assert(vec3[0] == 0);  // Borde exterior todo ceros
-    assert(vec3[1] == 12);  // Segundo borde: 4 unos en cada lado
-    assert(vec3[2] == 4);  // Borde central: 4 unos
+    assert(vec3[0] == 0);  
+    assert(vec3[1] == 12);  
+    assert(vec3[2] == 4);   
 
     // Test 4: Matriz con patrón de ajedrez
     int m4[M][M] = {
@@ -63,9 +63,9 @@ int main() {
     };
     int vec4[M/2];
     bordes(m4, vec4);
-    assert(vec4[0] == 10);  // Borde exterior: 3 unos en cada borde
-    assert(vec4[1] == 6);  // Segundo borde: 2 unos en cada borde
-    assert(vec4[2] == 2);  // Borde central: 1 uno en cada borde
+    assert(vec4[0] == 10);  
+    assert(vec4[1] == 6);  
+    assert(vec4[2] == 2);   
 
     puts("OK!");
     return 0;
