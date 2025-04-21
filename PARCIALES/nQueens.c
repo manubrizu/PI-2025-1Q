@@ -67,8 +67,8 @@ int nQueens(unsigned int n, char mat[n][n]){
 }
 
 int amenaza(unsigned int n, char mat[n][n], int fil, int col){
-    static int movs[][2] = {{1, 0}, {0, 1}, {1, -1}, {1, 1}};
-    for (int i = 0; i < DIRS; i++){  // We know there are 4 possible movement directions
+    static int movs[][2] = {{1, 0}, {0, 1}, {1, -1}, {1, 1}};       // ABAJO    DERECHA     DIAGONALABAJOIZQ       DIAGONALABAJODER
+    for (int i = 0; i < DIRS; i++){
         int xAct = col + movs[i][1], yAct = fil + movs[i][0];
         while (xAct >= 0 && xAct < n && yAct >= 0 && yAct < n){
             if(mat[yAct][xAct] == '1')
