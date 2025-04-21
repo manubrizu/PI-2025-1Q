@@ -1,3 +1,5 @@
+// PRIMER PARCIAL 2023 2Q EJERCICIO 2
+
 #include <stdio.h>
 #include <assert.h>
 
