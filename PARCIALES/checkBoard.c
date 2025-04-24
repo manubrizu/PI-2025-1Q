@@ -45,7 +45,7 @@ int checkBoard(char mat[][DIM]) {
 
     for (int i = 0; i < DIM; i++) {
         for (int j = 0; j < DIM; j++) {
-            if (!(j % 2 == 0 && mat[i][j] == c1 || j%2 == 1 && mat[i][j] == c2)) {
+            if (!((j % 2 == 0 && mat[i][j] == c1) || (j%2 == 1 && mat[i][j] == c2))) {
                 return 0;
             }
         }
