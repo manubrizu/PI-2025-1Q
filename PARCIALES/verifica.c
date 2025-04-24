@@ -44,7 +44,7 @@ int verificaSubcuadrado(int mat[][N], int fila, int col, int* sum){
             if(mat[i][j] < 1 || mat[i][j] > 3*N){
                 return 0;
             }
-            if(apariciones[mat[i][j] - 1]){
+            if(apariciones[mat[i][j] - 1] == 1){
                 return 0;
             }
             apariciones[mat[i][j] - 1] = 1;

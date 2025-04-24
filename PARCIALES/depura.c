@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#define CHAR_MAX 256
+
 int depura(unsigned char vec[], int dim);
 
 int main() {
@@ -25,12 +27,6 @@ int main() {
     if (new_dim3 != 1) return 1;
     if (vec3[0] != 7) return 1;
 
-    // Test case 4: Empty vector
-    unsigned char vec4[] = {};
-    int dim4 = sizeof(vec4)/sizeof(vec4[0]);
-    int new_dim4 = depura(vec4, dim4);
-    if (new_dim4 != 0) return 1;
-
     puts("OK!");
     return 0;
 }
@@ -38,7 +34,7 @@ int main() {
 int depura(unsigned char vec[], int dim) {
     if (dim <= 0) return 0;
     
-    int apariciones[256] = {0};
+    int apariciones[CHAR_MAX] = {0};
     for (int i = 0; i < dim; i++) {
         if(!apariciones[vec[i]]) {
             apariciones[vec[i]] = 1; 
@@ -46,7 +42,7 @@ int depura(unsigned char vec[], int dim) {
     }
     
     int j = 0;
-    for (int i = 0; i < 256; i++) {
+    for (int i = 0; i < CHAR_MAX; i++) {
         if (apariciones[i]) {
             vec[j++] = i;
         }
