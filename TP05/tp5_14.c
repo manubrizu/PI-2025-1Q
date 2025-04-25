@@ -3,7 +3,7 @@
 #include <assert.h>
 
 // ip       11000000 10101000 00000000 01100100
-// maskRed  11111111 11111111 00000000 00000000 (0xFFFF0000)
+// maskRed  11111111 11111110 00000000 00000000 (0xFFFE0000)
 
 unsigned long int getMask(unsigned char bitsNet);
 void prettyPrint(unsigned long ip);
@@ -17,9 +17,9 @@ int main(){
 unsigned long int getMask(unsigned char bitsNet){
     unsigned long mask = 1;
     for(unsigned char i = 1; i < 32 - bitsNet; ++i){
-        mask = mask << 1 | 1;
+        mask = (mask << 1) | 1;           //    0000 0010 | 0000 0001 -> 0000 0011 ---> (15 veces) ->     00000000 00000001 11111111 11111111
     }
-    return ~mask;
+    return ~mask;   // -> 11111111 11111110 00000000 00000000
 }
 
 void prettyPrint(unsigned long ip){
@@ -38,12 +38,12 @@ void prettyPrint(unsigned long ip){
 }
 
 void separateNet(unsigned int ip, unsigned char bitsNet){
-    assert(bitsNet > 0 && bitsNet <= 32);
+    assert(bitsNet >= 1 && bitsNet <= 32);
 
     unsigned int mask = getMask(bitsNet), red, host;
 
-    red = ip & mask;
-    host = ip & ~mask;
+    red = ip & mask;        //  mask es la mascara de la red
+    host = ip & ~mask;      // ~mask es la mascara del host
 
     printf("Red: ");
     prettyPrint(red);
