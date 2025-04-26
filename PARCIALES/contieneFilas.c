@@ -3,8 +3,8 @@
 #define N 4
 
 int contieneVector(int v1[], int v2[], int dim);
-int contieneFilas(int (m1[N])[N], int (m2[N])[N]);
-int contieneMatriz(int (m1[N])[N], int (m2[N])[N]);
+int contieneFilas(int m1[N][N], int m2[N][N]);
+int contieneMatriz(int m1[N][N], int m2[N][N]);
 
 int main(){
     // Tests
