@@ -1,41 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include "./getnum.h"
 
+double * crearVector(int * dim);
 
-void generarMatriz(int dim, int mat[][dim]);
-int getMask(unsigned char bits);
-
-int main(){    
-    srand(time(NULL));
-    int mat[5][5];
-    generarMatriz(5, mat);
-
-    for (int i = 0; i < 5; i++){
-        for (int j = 0; j < 5; j++){
-            printf("%d ", mat[i][j]);
-        }
-        printf("\n");
+int main(){
+    int dim;
+    double* vec = crearVector(&dim);
+    
+    for (int i = 0; i < dim; i++){
+        printf("%g ", vec[i]);
     }
+
+    printf("\n");    
+    free(vec);
 
     return 0;
 }
 
+double * crearVector(int * dim){
+    *dim = getint("Ingrese la dimension (positiva PAJERO): \n");
 
-void generarMatriz(int dim, int mat[][dim]){
-    for (int i = 0; i < dim; i++){
-        for (int j = 0; j < dim; j++){
-            mat[i][j] = rand() % 10 + 1;
-        }
+    double * vec = malloc(*dim * sizeof(vec[0])); 
+
+    for (int i = 0; i < *dim; i++){
+        vec[i] = getdouble("Ingresa un numero real: \n");
     }
     
+    return vec;
 }
 
-// 1010 0011 0111 0110
-// 0000 0000 0000 1111  (0x000F)
-// 0000 0000 1111 0000
----
-// 0000 0000 0111 0110 
 
-//
 
