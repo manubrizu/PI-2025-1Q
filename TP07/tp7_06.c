@@ -6,8 +6,6 @@
 
 #define X 5
 #define DIGITOS 10
-#define N 3
-
 
 int* generarAleatorio();
 int elegirNivel();
@@ -20,6 +18,12 @@ int main(){
     randomize();
     int intentosMax = elegirNivel(), intentos = 0, gano = 0;
     int* incognita = generarAleatorio();
+    for (int i = 0; i < X; i++){
+        printf("%d", incognita[i]);
+    }
+
+    printf("\n");
+    
     int* num;
 
     while (intentos++ < intentosMax && !gano){
@@ -41,8 +45,14 @@ int main(){
 
 int* generarAleatorio(){
     int* incognita = malloc(X * sizeof(int));
-    for (int i = 0; i < X; i++){
-        incognita[i] = randInt(0, 9);
+    int apariciones[DIGITOS] = {0};
+    for (int i = 0; i < X;){
+        int random = randInt(0, 9);
+        if(!apariciones[random]){
+            incognita[i] = random;
+            apariciones[random] = 1;
+            i++;
+        }
     }    
     return incognita;
 }
@@ -63,7 +73,7 @@ int * leerNumero(){
     int vale = 0;
 
     while (!vale){
-        printf("Ingrese un numero de %d digitos: \n", X);
+        printf("Ingrese un numero de %d digitos: ", X);
         scanf("%s", num);
 
         int len = strlen(num);
@@ -83,7 +93,7 @@ int * leerNumero(){
             }
         } 
     }
-
+ 
     int* resp = malloc(X * sizeof(int));
     for (int i = 0; i < X; i++){
         resp[i] = num[i] - '0';
@@ -95,11 +105,11 @@ int * leerNumero(){
 int coincideNumero(int n1[], int n2[]){
     int cant_bien = cantidadBien(n1, n2);
     if(cant_bien == X){
-        printf("%d bien", cant_bien);
+        printf("%d bien\n", cant_bien);
         return 1;
     }    
     int cant_reg = cantidadRegular(n1, n2);
-    printf("%d bien, %d regular", cant_bien, cant_reg);
+    printf("%d bien, %d regular\n", cant_bien, cant_reg);
     return 0;
 }
 
@@ -113,15 +123,16 @@ int cantidadBien(int n1[], int n2[]){
     return cant;
 }
 
-int cantidadRegular(int n1[], int n2[]){
+int cantidadRegular(int n1[], int n2[]) {
     int cant = 0;
-    for (int i = 0; i < X; i++){
-        for (int j = i; j < X; j++){
-            if(n1[i] == n2[j] && i != j){
-                cant++;
+    for (int i = 0; i < X; i++) {
+        if (n1[i] != n2[i]) {
+            for (int j = 0; j < X; j++) {
+                if (i != j && n1[i] == n2[j] && n1[j] != n2[j]) {
+                    cant++;
+                }
             }
         }
-        
     }
     return cant;
 }
