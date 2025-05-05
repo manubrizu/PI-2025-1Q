@@ -6,6 +6,38 @@
 
 #define X 5
 #define DIGITOS 10
+#define N 3
+
+
+int* generarAleatorio();
+int elegirNivel();
+int * leerNumero();
+int coincideNumero(int n1[], int n2[]);
+int cantidadBien(int n1[], int n2[]);
+int cantidadRegular(int n1[], int n2[]);
+
+int main(){
+    randomize();
+    int intentosMax = elegirNivel(), intentos = 0, gano = 0;
+    int* incognita = generarAleatorio();
+    int* num;
+
+    while (intentos++ < intentosMax && !gano){
+        num = leerNumero();
+        if(coincideNumero(num, incognita)){
+            printf("CORRECTO.\n");
+            gano = 1;
+        }
+        free(num);
+    } 
+
+    if(!gano){
+        printf("PERDISTE.\n");
+    }
+
+    free(incognita);
+    return 0;
+}
 
 int* generarAleatorio(){
     int* incognita = malloc(X * sizeof(int));
@@ -15,10 +47,11 @@ int* generarAleatorio(){
     return incognita;
 }
 
+
 int elegirNivel(){
     int nivel;
     do{
-        nivel = getint("Ingrese un nivel: ");
+        nivel = getint("NIVEL: ");
     } while (nivel < 1 || nivel > 10);
     
     return nivel;
@@ -30,7 +63,7 @@ int * leerNumero(){
     int vale = 0;
 
     while (!vale){
-        printf("Ingrese un numero de %d digitos: ", X);
+        printf("Ingrese un numero de %d digitos: \n", X);
         scanf("%s", num);
 
         int len = strlen(num);
@@ -54,30 +87,41 @@ int * leerNumero(){
     int* resp = malloc(X * sizeof(int));
     for (int i = 0; i < X; i++){
         resp[i] = num[i] - '0';
-    }
-    
+    }  
 
     return resp;    
 }
 
-int main(){
-    randomize();
-
-    int* vec = generarAleatorio();
-
-    free(vec);
-
-    int* num = leerNumero();
-
-    for (int i = 0; i < X; i++){
-        printf("%d", num[i]);
-    }
-
-    printf("\n");
-    
-    
-
-    free(num);
-
+int coincideNumero(int n1[], int n2[]){
+    int cant_bien = cantidadBien(n1, n2);
+    if(cant_bien == X){
+        printf("%d bien", cant_bien);
+        return 1;
+    }    
+    int cant_reg = cantidadRegular(n1, n2);
+    printf("%d bien, %d regular", cant_bien, cant_reg);
     return 0;
+}
+
+int cantidadBien(int n1[], int n2[]){
+    int cant = 0;
+    for (int i = 0; i < X; i++){
+        if(n1[i] == n2[i]){
+            cant++;
+        }
+    }
+    return cant;
+}
+
+int cantidadRegular(int n1[], int n2[]){
+    int cant = 0;
+    for (int i = 0; i < X; i++){
+        for (int j = i; j < X; j++){
+            if(n1[i] == n2[j] && i != j){
+                cant++;
+            }
+        }
+        
+    }
+    return cant;
 }
