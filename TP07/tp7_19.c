@@ -4,7 +4,7 @@
 char * copiarPrefijo(char * s, int n);
 
 int main(){
-    char s[] = "Hola";
+    char * s = "Hola";
     int n = 2;
 
     char * prefijo = copiarPrefijo(s, n);
