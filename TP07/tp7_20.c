@@ -49,6 +49,7 @@ char **aprobados(TAlumnos alumnos, const int notas[]) {
         }
     }
 
+    aprobados = realloc(aprobados, (count + 1) * sizeof(char *));
     aprobados[j] = NULL;
 
     return aprobados;
