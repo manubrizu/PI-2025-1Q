@@ -2,6 +2,7 @@
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
         "stdio.h": "c",
-        "getnum.h": "c"
+        "getnum.h": "c",
+        "assert.h": "c"
     }
 }
