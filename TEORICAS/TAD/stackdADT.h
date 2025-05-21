@@ -1,0 +1,2 @@
+
+typedef struct stackCDT * stackADT;
