@@ -34,4 +34,6 @@ List delete (List l, int elem);
 
 int get(List l, int index);
 
+void printList(List l);
+
 #endif

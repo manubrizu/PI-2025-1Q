@@ -63,7 +63,7 @@ List delete (List l, int elem){
   }
   if(l->head == elem){
     node * aux = l->tail;
-    free(l->tail);
+    free(aux);
     return l;
   }
   l->tail = delete(l->tail, elem);
@@ -78,4 +78,12 @@ int get(List l, int index){
     return l->head;
   }
   return get(l->tail, index - 1);
+}
+
+void printList(List l) {
+    while (!isEmpty(l)) {
+        printf("%d ", l->head);
+        l = l->tail;
+    }
+    printf("\n");
 }
