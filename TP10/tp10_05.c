@@ -93,6 +93,5 @@ List restaList(List l1, List l2){
     }
 
     // caso en que sean iguales 
-
     return restaList(l1->tail, l2->tail); 
 }
