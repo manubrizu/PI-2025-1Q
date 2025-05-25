@@ -87,7 +87,7 @@ List restaList(List l1, List l2){
         aux->tail = restaList(l1->tail, l2);    // sigo en l1
         return aux;
     }
-
+    
     if(l1->head > l2->head){
         return restaList(l1, l2->tail);     // sigo en l2
     }
