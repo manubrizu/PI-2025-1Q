@@ -77,9 +77,58 @@ int belongs(const listADT l, elemType elem){
 
 }
 
-int addElement(listADT l, elemType elem);
+static node * addElementRec(node * l, elemType elem, compare cmp, int * flag){
+    int c;
 
-int delete(listADT l, elemType elem);
+    if(l == NULL || (c = cmp(l->head, elem)) > 0){
+        node * aux = malloc(sizeof(node));
+        aux->head = elem;
+        aux->tail = l;
+        *flag = 1;
+        return aux;
+    }
+
+    if(c == 0){
+        return l;
+    }
+
+    l->tail = addElementRec(l->tail, elem, cmp, flag);
+    return l;
+}
+
+int addElement(listADT l, elemType elem){
+    int flag = 0;
+    l->first = addElementRec(l->first, elem, l->cmp, &flag);
+    if(flag){
+        l->size++;
+    }
+}
+
+static node * deleteRec(node * l, int elem, compare cmp, int * flag){
+    int c;
+    if(l == NULL || (c = cmp(l->head, elem)) > 0){
+        return l;
+    }
+
+    if(c == 0){
+        node * aux = l->tail;
+        free(l);
+        *flag = 1;
+        return aux;
+    }
+    
+    l->tail = deleteRec(l->tail, elem, cmp, flag);
+    return l;
+}
+
+int delete(listADT l, elemType elem){
+    int flag = 0;
+    l->first = deleteRec(l->first, elem, l->cmp, &flag);
+    if(flag){
+        l->size--;
+    }
+    return flag;
+}
 
 
 
