@@ -23,8 +23,6 @@ int size(const listADT l); // NO HACE FALTA LO HACE MENOS INEFICIENTE SE PUEDE A
 
 elemType devolver(listADT l, int i);
 
-void map(listADT l, elemType (*foo) (elemType));
-
 
 
 

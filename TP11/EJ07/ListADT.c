@@ -149,15 +149,6 @@ elemType devolver(listADT l, int i){
     return devolverRec(l->first, i);
 }
 
-void mapRec(node * l, elemType (*foo) (elemType)){
-    if(isEmpty(l)){
-        return;
-    }
 
-    mapRec(l->tail, foo);
-    l->head = foo(l->head);    
-}
 
-void map(listADT l, elemType (*foo) (elemType)){
-    mapRec(l->first, foo);
-}
+
