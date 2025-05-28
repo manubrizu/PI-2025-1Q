@@ -19,9 +19,14 @@ int isEmpty(const listADT l);
 
 int belongs(const listADT l, elemType elem);
 
- int size(const listADT l); // NO HACE FALTA LO HACE MENOS INEFICIENTE SE PUEDE AGREGAR DIRECTAMENTE EN EL ISTCDT
+int size(const listADT l); // NO HACE FALTA LO HACE MENOS INEFICIENTE SE PUEDE AGREGAR DIRECTAMENTE EN EL ISTCDT
 
+elemType get(listADT l, int i);
 
+elemType * toArray(listADT l);
 
+void toBegin(listADT l);
 
+int hasNext(listADT l);
 
+elemType next(listADT l);
