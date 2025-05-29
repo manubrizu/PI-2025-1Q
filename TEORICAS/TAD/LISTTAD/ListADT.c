@@ -174,6 +174,9 @@ int hasNext(listADT l){
 }
 
 elemType next(listADT l){
+    if(l->actual == NULL){
+        exit(1);
+    }
     elemType aux = l->actual->head;
     l->actual = l->actual->tail;
     return aux;
