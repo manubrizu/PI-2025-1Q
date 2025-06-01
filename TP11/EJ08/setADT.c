@@ -48,13 +48,13 @@ static List listUnion (const List l1, const List l2, compare cmp){
 
     List aux = newList(cmp);
 
-    if (l1 == NULL || cmp(l1->head, l2->head) > 0){
-    aux->head = l2->head;
-    aux->tail = unionRec(l1, l2->tail, cmp);
-    return aux;
-
+    if (isEmpty(l1) || cmp(l1->head, l2->head) > 0){
+        aux->head = l2->head;
+        aux->tail = unionRec(l1, l2->tail, cmp);
+        return aux;
     }
-    if (l2 == NULL || cmp(l1->head, l2->head) < 0){
+
+    if (isEmpty(l2) || cmp(l1->head, l2->head) < 0){
         aux->head = l1->head;
         aux->tail = unionRec(l1->tail, l2, cmp);
         return aux;
@@ -72,63 +72,49 @@ setADT unionSet(setADT set1, setADT set2){
     return aux;
 }
 
-static List listIntersec (const List l1, const List l2){
+static List listIntersec (const List l1, const List l2, compare cmp){
     if(isEmpty(l1) || isEmpty(l2)){
         return NULL;
     }
 
     if(l1->head < l2->head){
-        return listIntersec(l1->tail, l2);
+        return listIntersec(l1->tail, l2, cmp);
     }
 
     if(l1->head > l2->head){
-        return listIntersec(l1, l2->tail);
+        return listIntersec(l1, l2->tail, cmp);
     }
 
-    List aux = malloc(sizeof(node));
+    List aux = newList(cmp);
     aux->head = l1->head;
-    aux->tail = listIntersec(l1->tail, l2->tail);
+    aux->tail = listIntersec(l1->tail, l2->tail, cmp);
     return aux;
 }
 
 setADT intersectionSet(setADT set1, setADT set2){
     setADT aux = newSet(set1->cmp);
-    aux->l = listIntersec(set1->l, set2->l);
+    aux->l = listIntersec(set1->l, set2->l, set1->cmp);
     return aux;
 }
 
-static List listdiff(const List l1, const List l2){
-    if (isEmpty(l1) && isEmpty(l2)) {
+static List listDiff(const List l1, const List l2, compare cmp){
+    if (isEmpty(l1)) {
         return NULL;
     }
-    if (isEmpty(l1)) {
-        // Copiar el resto de l2
-        List aux = malloc(sizeof(node));
-        aux->head = l2->head;
-        aux->tail = listSymDiff(NULL, l2->tail);
-        return aux;
-    }
-    if (isEmpty(l2)) {
-        // Copiar el resto de l1
-        List aux = malloc(sizeof(node));
+    
+    if (isEmpty(l2) || l1->head < l2->head){
+        List aux = newList(cmp);
         aux->head = l1->head;
-        aux->tail = listSymDiff(l1->tail, NULL);
+        aux->tail = restaList(l1->tail, l2);    // sigo en l1
         return aux;
     }
-    if (l1->head < l2->head) {
-        List aux = malloc(sizeof(node));
-        aux->head = l1->head;
-        aux->tail = listSymDiff(l1->tail, l2);
-        return aux;
-    }
-    if (l1->head > l2->head) {
-        List aux = malloc(sizeof(node));
-        aux->head = l2->head;
-        aux->tail = listSymDiff(l1, l2->tail);
-        return aux;
+    
+    if(l1->head > l2->head){
+        return restaList(l1, l2->tail);     // sigo en l2
     }
 
-    return listSymDiff(l1->tail, l2->tail);
+    // caso en que sean iguales 
+    return restaList(l1->tail, l2->tail); 
 }
 
 setADT diffSet(setADT set1, setADT set2){
