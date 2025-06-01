@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "ListADT.h"
 
+#define BLOCK 10
+
 typedef struct node{
     elemType head;
     struct node * tail;
@@ -10,6 +12,7 @@ typedef struct node{
 
 typedef struct listCDT{
     struct node * first;
+    struct node * actual;
     unsigned int size;
     compare cmp;
 } listCDT;
@@ -43,7 +46,7 @@ void freeList(listADT l){
     free(l);
 }
 
-int belongsRec(node * l, int elem, compare cmp){
+int belongsRec(node * l, elemType elem, compare cmp){
     if(l == NULL){
         return 0;
     }
@@ -103,9 +106,10 @@ int addElement(listADT l, elemType elem){
     if(flag){
         l->size++;
     }
+    return flag;
 }
 
-static node * deleteRec(node * l, int elem, compare cmp, int * flag){
+static node * deleteRec(node * l, elemType elem, compare cmp, int * flag){
     int c;
     if(l == NULL || (c = cmp(l->head, elem)) > 0){
         return l;
@@ -131,24 +135,50 @@ int delete(listADT l, elemType elem){
     return flag;
 }
 
-static elemType devolverRec(node * l, int i){
+static elemType getRec(node * l, int i){
     if(l == NULL || i < 0){
         return NULL;
     }
     if(i == 0){
         return l->head;
     }
-    return devolverRec(l->tail, i - 1);
+    return getRec(l->tail, i - 1);
 }
 
-elemType devolver(listADT l, int i){
+elemType get(const listADT l, int i){
     if(i < 0 || i >= l->size) {
         return NULL;
     }
-
-    return devolverRec(l->first, i);
+    return getRec(l->first, i);
 }
 
+elemType * toArray(const listADT l){
+    elemType * aux = malloc(size(l) * sizeof(elemType));
 
+    node * foo = l->first;
+    
+    for (int i = 0; i < size(l); i++){
+        aux[i] = foo->head;
+        foo = foo->tail; 
+    }
+    
+    return aux;
+}
 
+void toBegin(listADT l){
+    l->actual = l->first;
+}
+
+int hasNext(listADT l){
+    return l->actual != NULL;
+}
+
+elemType next(listADT l){
+    if(l->actual == NULL){
+        exit(1);
+    }
+    elemType aux = l->actual->head;
+    l->actual = l->actual->tail;
+    return aux;
+}
 

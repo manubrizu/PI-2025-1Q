@@ -10,7 +10,8 @@ typedef struct setCDT{
 } setCDT;
 
 setADT newSet(compare cmp){
-    setADT aux = malloc(sizeof(setCDT));
+    setADT aux = calloc(1, sizeof(setCDT));
+    aux->l = newList(cmp);
     aux->cmp = cmp;
     return aux;
 }
@@ -21,17 +22,11 @@ void freeSet(setADT set){
 }
 
 int isEmptySet(setADT set){
-    if(isEmpty(set->l)){
-        return 1;
-    }
-    return 0;
+    return isEmpty(set->l);
 }
 
 int setContains(const setADT set, elemType element){
-    if(belongs(set->l, element)){
-        return 1;
-    }
-    return 0;
+    return belongs(set->l, element);
 }
 
 int addElementSet(setADT set, elemType element){
@@ -46,31 +41,34 @@ int sizeSet(const setADT set){
     return size(set->l);
 }
 
-static List listUnion (const List l1, const List l2){
+static List listUnion (const List l1, const List l2, compare cmp){
     if(isEmpty(l1) && isEmpty(l2)){
         return NULL;
     }
-    
-    List aux = malloc(sizeof(node)); // en cada iteracion voy a agregar algo.
-      
-    if(!isEmpty(l2) && (isEmpty(l1) || l1->head > l2->head)){ // tengo que chequear que l2 no este vacia, ya que podria estar acciendo a NULL
-        aux->head = l2->head;
-        aux->tail = listUnion(l1, l2->tail);
-    }
-    else if(isEmpty(l2) || l1->head < l2->head){ // aca ya me asegure que l1 no es vacia en el if de arriba, no hace falta la otra condicion
-        aux->head = l1->head;
-        aux->tail = listUnion(l1->tail, l2);
-    }
-    else{  // el unico caso que queda es en el que los elementos son iguales
-        aux->head = l1->head;
-        aux->tail = listUnion(l1->tail, l2->tail);
-    }    
+
+    List aux = newList(cmp);
+
+    if (l1 == NULL || cmp(l1->head, l2->head) > 0){
+    aux->head = l2->head;
+    aux->tail = unionRec(l1, l2->tail, cmp);
     return aux;
+
+    }
+    if (l2 == NULL || cmp(l1->head, l2->head) < 0){
+        aux->head = l1->head;
+        aux->tail = unionRec(l1->tail, l2, cmp);
+        return aux;
+    }
+
+    aux->head = l1->head; 
+    aux->tail = unionRec(l1->tail, l2->tail, cmp);
+    return aux;
+
 }
 
 setADT unionSet(setADT set1, setADT set2){
     setADT aux = newSet(set1->cmp);
-    aux->l = listUnion(set1->l, set2->l);
+    aux->l = listUnion(set1->l, set2->l, set1->cmp);
     return aux;
 }
 
