@@ -15,7 +15,7 @@ TListBrief comprimeList(const List l);
 
 // Auxiliar para que pase el test con sanitizer
 void freeListBrief(TListBrief lb) {
-   if ( lb == NULL)
+   if (lb == NULL)
      return;
    freeListBrief(lb->tail);
    free(lb);

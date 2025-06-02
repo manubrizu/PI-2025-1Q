@@ -23,7 +23,7 @@ unsigned int add(bagADT bag, elemType elem);
 /* Remueve una aparición de un elemento. Retorna cuántas veces está
 ** elem en el conjunto luego de haberlo borrado
 */
-unsigned int deleteBag(bagADT bag, elemType elem);
+unsigned int delete(bagADT bag, elemType elem);
 
 /* Retorna cuántas veces aparece el elemento en el bag */
 unsigned int count(const bagADT bag, elemType elem);
