@@ -5,6 +5,7 @@
         "getnum.h": "c",
         "assert.h": "c",
         "complexadt.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "vecadt.h": "c"
     }
 }
