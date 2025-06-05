@@ -23,7 +23,7 @@ typedef struct words {
 
 
 typedef struct dictCDT{
-    words letters[LETRAS];
+    struct words letters[LETRAS];
     size_t wordsCount;
 } dictCDT;
 
@@ -56,8 +56,8 @@ static char * copyDeff(const char * s, int * len){
 }
 
 static List addWordRec(List l, const char * word, const char * deff, int * flag){
-    int c = strcmp(l->word, word);
-    if(l == NULL || c < 0){
+    int c;
+    if(l == NULL || (c = strcmp(l->word, word)) < 0){
         List aux = malloc(sizeof(node));
         int lenW, lenD;
         aux->word =  copyWord(word, &lenW);
@@ -106,3 +106,76 @@ char * getDeff(const dictADT dict, const char * word){
     return getDeffRec(dict->letters[idx].first, word);
 }
 
+char ** words(const dictADT dict, size_t * dim){
+    if(dict->wordsCount == 0){
+        * dim = 0;
+        return NULL;
+    }
+
+    char ** vec = malloc(dict->wordsCount * sizeof(char *));
+    int j = 0;
+    for (int i = 0; i < LETRAS; i++){
+        node * aux = dict->letters[i].first;
+        while (aux != NULL){
+            vec[j] = malloc(aux->lenW);
+            strcpy(vec[j++], aux->word);
+            aux = aux->next;
+        }
+        
+    }
+
+    *dim = j;
+    return vec;    
+}
+
+char ** wordsBeginWith(const dictADT dict, char letter, size_t * dim){
+    
+}
+
+node * removeRec(List l, const char * word, int * flag){
+    int c;
+    if(l == NULL || (c = strcmp(l->word, word) < 0)){       // la palabra que busco ya se paso de la actual, no va a estar mas adelante
+        return l;
+    }
+    if(c == 0){
+        *flag = 1;
+        node * aux = l->next;
+        free(l->word);
+        free(l->deff);
+        free(l);
+        return aux;
+    }
+
+    // caso en que c > 0
+    l->next = removeRec(l->next, word, flag);
+    return l;
+}
+
+void removeWord(dictADT dict, const char * word){
+    int idx = * word - 'a';
+    int flag = 0;
+    dict->letters[idx].first = removeRec(dict->letters[idx].first, word, &flag);
+
+    if(flag){
+        dict->wordsCount--;
+        dict->letters[idx].deffCount--;
+    }
+}
+
+void freeDictRec(List l){
+    if(l != NULL){
+        free(l->word);
+        free(l->deff);
+        freeDictRec(l->next);
+        free(l);
+    }
+}
+
+
+void freeDict(dictADT dict){
+    for (int i = 0; i < LETRAS; i++){           // hago free de los List
+        freeDictRec(dict->letters[i].first);
+    }
+    free(dict);
+    
+}
