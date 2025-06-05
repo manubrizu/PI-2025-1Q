@@ -63,15 +63,15 @@ char * getVerse(bibleADT bible, size_t bookNbr, size_t verseNbr){
     return copyStr(book->verses[verseNbr - 1]);
 }
 
-void freeBible(bibleADT bible){
+void freeBible(bibleADT b){
     for (int i = 0; i < LIBROS; i++){
-        tbook * book = bible[i];
-        for (int j = 0; i < count; i++)
-        {
-            /* TERMINAR */
+        tbook * book = &b->bible[i];
+        for (int j = 0; i < b->bible->dim; i++){
+            free(book->verses[j]);
         }
-        
+        free(book);
     }
+    free(b);
     
 }
 
