@@ -16,7 +16,7 @@ listADT newList(compare cmp);
 void add(listADT list, elemType elem);
 
 /* Elimina un elemento. */
-void remove(listADT list, elemType elem);
+void removeElem(listADT list, elemType elem);
 
 /* Resetea el iterador que recorre la lista en el orden de inserción */
 void toBegin(listADT list);
