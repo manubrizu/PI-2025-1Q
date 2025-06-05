@@ -67,7 +67,7 @@ size_t squirrelsInBlock(const squirrelCensusADT squirrelAdt, size_t yDist, size_
     size_t x = xDist / squirrelAdt->blockSize;
 
     if(y >= squirrelAdt->rowCount || x >= squirrelAdt->rows[y].colCount){
-        exit(1);
+        return 0;
     }
 
     return squirrelAdt->rows[y].ardillas[x];
