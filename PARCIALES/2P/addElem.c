@@ -28,7 +28,7 @@ List addElem(List l, char elem){
 
     // ahora me fijo si el agregue en la cola tiene mas hit, sino lo cambio
 
-    if(l->tail != NULL && l->hits < l->tail->hits){
+    if(l->hits < l->tail->hits){
         List aux = l->tail;
         l->tail = aux->tail;
         aux->tail = l;
@@ -68,6 +68,6 @@ int main(void) {
 
     freeRec(l);
 
-    puts( "OK");
+    puts( "OK!");
     return 0;
 }
