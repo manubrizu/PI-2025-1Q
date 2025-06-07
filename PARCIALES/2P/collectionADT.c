@@ -23,14 +23,7 @@ collectionADT newCollection(compare cmp){
 }
 
 static List addElementRec(List l, elemType elem, size_t idx){
-    if(l == NULL){
-        List aux = malloc(sizeof(node));
-        aux->elem = elem;
-        aux->tail = NULL;
-        return aux;
-    }
-
-    if(idx == 0){
+    if(l == NULL || idx == 0){
         List aux = malloc(sizeof(node));
         aux->elem = elem;
         aux->tail = l;
