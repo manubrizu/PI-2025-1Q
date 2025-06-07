@@ -25,7 +25,7 @@ courseADT newCourse(size_t year, size_t subjects){
 }
 
 static char * copyStr(const char * s){
-    return strcpy(malloc(strlen(s)), s);
+    return strcpy(malloc(strlen(s) + 1), s);
 }
 
 int addStudent(courseADT course, size_t id, const char * name){
@@ -61,13 +61,12 @@ char * studentName(const courseADT course, size_t id){
     size_t digitos = course->anio % 100;    // ultimos 2
     size_t legajoDigitos = id / 10000;      // primeros 2
     size_t idx = (id % 10000) - 1;
-    if(digitos != legajoDigitos || course->alumnos[idx] == NULL){
+    if(digitos != legajoDigitos || idx >= course->dim || course->alumnos[idx] == NULL){
         return NULL;
     }
 
     return copyStr(course->alumnos[idx]->nombre);
 }
-
 
 size_t students(const courseADT course){
     return course->cantAlumn;
@@ -85,4 +84,16 @@ int setGrade(courseADT course, size_t id, size_t subject, unsigned char grade){
     
     course->alumnos[idx]->notas[idxMat] = grade;
     return 1;
+}
+
+void freeCourse(courseADT course){
+    for (int i = 0; i < course->dim; i++){
+        if (course->alumnos[i] != NULL) {
+            free(course->alumnos[i]->nombre);
+            free(course->alumnos[i]->notas);
+            free(course->alumnos[i]);
+        }
+    }
+    free(course->alumnos);
+    free(course);    
 }

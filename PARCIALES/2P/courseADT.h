@@ -3,7 +3,7 @@
 
 typedef struct courseCDT * courseADT;
 
-/* Crea un sistema de administración del curso de ingreso para un año #year
+/* Crea un sistema de administración del curso de ingreso para un año #YEAR
 * con una cantidad #subjects de materias
 */
 courseADT newCourse(size_t year, size_t subjects);
@@ -30,6 +30,7 @@ size_t students(const courseADT course);
 */
 int setGrade(courseADT course, size_t id, size_t subject, unsigned char grade);
 
+// NO HACIAN FALTAS ESTAS DE ABAJO
 /* Retorna la nota de un estudiante en una materia. La nota de una materia es cero
 * hasta tanto se registre una nueva nota
 * Si el legajo del estudiante es incorrecto o no existe el estudiante retorna -1
