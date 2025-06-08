@@ -15,7 +15,7 @@ typedef struct queueCDT{
 
 
 queueADT newQueue(){
-    return calloc(1, sizeof(node));
+    return calloc(1, sizeof(queueCDT));
 }
 
 int isEmpty(queueADT q){

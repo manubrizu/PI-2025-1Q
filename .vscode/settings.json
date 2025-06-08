@@ -6,6 +6,7 @@
         "assert.h": "c",
         "complexadt.h": "c",
         "stdlib.h": "c",
-        "vecadt.h": "c"
+        "vecadt.h": "c",
+        "collectionadt.h": "c"
     }
 }
