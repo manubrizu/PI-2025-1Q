@@ -15,6 +15,7 @@ List addElem(List l, char elem){
         List aux = calloc(1, sizeof(node));
         aux->head = elem;
         aux->hits = 0;
+        aux->tail = NULL;
         return aux;
     }
 

@@ -8,5 +8,12 @@
         "stdlib.h": "c",
         "vecadt.h": "c",
         "collectionadt.h": "c"
+    },
+
+    "editor.quickSuggestions": {
+        "other": "off",
+        "comments": "off",
+        "strings": "off"
     }
 }
+
