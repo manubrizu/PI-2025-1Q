@@ -25,71 +25,71 @@ piersADT newPiers(void){
 }
 
 size_t addPier(piersADT piers, size_t pierNumber){
-    if(piers->dim < pierNumber){
-        piers->puertos = realloc(piers->puertos, pierNumber * sizeof(puerto));
-        for (size_t i = piers->dim; i < pierNumber; i++){
+    if(piers->dim <= pierNumber){
+        piers->puertos = realloc(piers->puertos, (pierNumber + 1) * sizeof(puerto));
+        for (size_t i = piers->dim; i <= pierNumber; i++){
             piers->puertos[i].cantMuelles = 0;
             piers->puertos[i].muelles = NULL;
             piers->puertos[i].dim = 0;
             piers->puertos[i].existsP = 0;
         }
-        piers->dim = pierNumber;
+        piers->dim = pierNumber + 1;
     }
 
-    if(piers->puertos[pierNumber - 1].existsP){
+    if(piers->puertos[pierNumber].existsP){
         return 0;
     }
 
-    piers->puertos[pierNumber - 1].existsP = 1;
+    piers->puertos[pierNumber].existsP = 1;
     piers->cantPuertos++;
     return 1;
 }
 
 size_t addPierDock(piersADT piers, size_t pierNumber, size_t dockNumber){
-    if(piers->dim < pierNumber){
-        piers->puertos = realloc(piers->puertos, pierNumber * sizeof(puerto));
-        for (size_t i = piers->dim; i < pierNumber; i++){
+    if(piers->dim <= pierNumber){
+        piers->puertos = realloc(piers->puertos, (pierNumber + 1) * sizeof(puerto));
+        for (size_t i = piers->dim; i <= pierNumber; i++){
             piers->puertos[i].cantMuelles = 0;
             piers->puertos[i].muelles = NULL;
             piers->puertos[i].dim = 0;
             piers->puertos[i].existsP = 0;
         }
-        piers->dim = pierNumber;
+        piers->dim = pierNumber + 1;
     }
 
-    puerto * p = &piers->puertos[pierNumber - 1];
+    puerto * p = &piers->puertos[pierNumber];
 
-    if(p->dim < dockNumber){
-        p->muelles = realloc(p->muelles, dockNumber * sizeof(muelle));
+    if(p->dim <= dockNumber){
+        p->muelles = realloc(p->muelles, (dockNumber + 1) * sizeof(muelle));
         for(size_t i = p->cantMuelles; i <= dockNumber; ++i){
             p->muelles[i].amarrado = 0;
             p->muelles[i].existsM = 0;
         }
-        p->dim = dockNumber;
+        p->dim = dockNumber + 1;
     }
 
-    if(p->muelles[dockNumber - 1].existsM){
+    if(p->muelles[dockNumber].existsM){
         return 0;
     }
 
-    p->muelles[dockNumber - 1].existsM = 1;
+    p->muelles[dockNumber].existsM = 1;
     p->cantMuelles++;
     return 1;
 }
 
 size_t dockShip(piersADT piers, size_t pierNumber, size_t dockNumber){
-    if(piers->dim < pierNumber || piers->puertos[pierNumber - 1].dim < dockNumber || ! piers->puertos[pierNumber - 1].muelles[dockNumber - 1].existsM || piers->puertos[pierNumber - 1].muelles[dockNumber - 1].amarrado){
+    if(piers->dim <= pierNumber || piers->puertos[pierNumber].dim <= dockNumber || ! piers->puertos[pierNumber].muelles[dockNumber].existsM || piers->puertos[pierNumber].muelles[dockNumber].amarrado){
         return 0;
     }
 
-    piers->puertos[pierNumber - 1].muelles[dockNumber - 1].amarrado = 1;
+    piers->puertos[pierNumber].muelles[dockNumber].amarrado = 1;
     return 1;
 }
 
 int shipInDock(const piersADT piers, size_t pierNumber, size_t dockNumber){
-    if(piers->dim < pierNumber || piers->puertos[pierNumber - 1].dim < dockNumber){
+    if(piers->dim <= pierNumber || piers->puertos[pierNumber].dim <= dockNumber){
         return -1;
     }
 
-    return piers->puertos[pierNumber - 1].muelles[dockNumber - 1].amarrado;
+    return piers->puertos[pierNumber].muelles[dockNumber].amarrado;
 }
