@@ -28,7 +28,7 @@ int addStation(bikeSharingADT bike, size_t stationId, size_t docksCount){
     }
 
     station * s = &bike->stations[stationId - 1];
-    s->docks = calloc(docksCount, s->docks);
+    s->docks = malloc(docksCount);
     for(int i = s->countDocks; i < docksCount; ++i){
         s->docks[i] = 1;
     }
@@ -49,7 +49,7 @@ int rentBike(bikeSharingADT bike, size_t stationId, size_t dockId){
     return 0;
 }
 
-int bikesAvailable(bikeSharingADT bikeSharingAdt, size_t stationId){
+int bikesAvailable(bikeSharingADT bike, size_t stationId){
     if(stationId == 0 || bike->countStations > stationId || ! bike->stations[stationId - 1].exists){
         return -1;
     }
@@ -77,7 +77,7 @@ int returnBike(bikeSharingADT bike, size_t stationId, size_t dockId){
 
 
 void freeBikeSharing(bikeSharingADT bike){
-    for(size_t i = 0; i < bike->maxStations){
+    for(size_t i = 0; i < bike->maxStations; ++i){
         free(bike->stations[i].docks);
     }
     free(bike->stations);
