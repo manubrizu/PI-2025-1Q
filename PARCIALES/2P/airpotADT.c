@@ -123,12 +123,14 @@ char ** pendingFlights(airportADT airportAdt, size_t runwayId){
     char ** aux = malloc((airportAdt->pendingAirport + 1) * sizeof(char *));
     
     returnRec(airportAdt->cola[runwayId - 1].first, &i, aux);
-    /*  ITERATIVO
-    aux[airportAdt->pendingAirport + 1] = "";
+    
+    aux[airportAdt->pendingAirport] = "";
+    List foo = airportAdt->cola[runwayId - 1].first;
 
-    for(size_t i = runwayId; i > 0; --i){
-        aux[i] = airportAdt->cola[runwayId - i].first->code;
+    for(size_t i = airportAdt->pendingAirport - 1; i >= 0; --i){
+        aux[i] = foo->code;
+        foo = foo->next;
     }
-    */
+    
    return aux;
 }
