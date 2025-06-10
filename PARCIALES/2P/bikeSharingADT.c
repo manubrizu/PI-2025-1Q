@@ -83,4 +83,3 @@ void freeBikeSharing(bikeSharingADT bike){
     free(bike->stations);
     free(bike);
 }
-
