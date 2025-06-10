@@ -25,15 +25,16 @@ elemCountADT newElemCount(compare cmp){
 }
 
 static List countElemRec(List l, elemtype elem, compare cmp, size_t * cont){
-    if(l == NULL){	// el elemento no esta en la Lista lo agrego
+    int c;
+    if(l == NULL || (c = cmp(elem, l->head)) < 0){	// el elemento no esta en la Lista lo agrego
     	List aux = malloc(sizeof(node));
         aux->count = *cont = 1;
         aux->head = elem;
-        aux->next = NULL;
+        aux->next = l;
 	    return aux;
     }
 
-    if(cmp(l->head, elem) == 0){
+    if(c == 0){
         l->count++;
 	    *cont = l->count;
 	    return l;

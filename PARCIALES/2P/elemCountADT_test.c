@@ -20,9 +20,9 @@ int main(void) {
     size_t aux;
     toBegin(ecADT);
     assert(hasNext(ecADT) == 1);
-    assert(next(ecADT, &aux) == 10 && aux == 3);
-    assert(hasNext(ecADT) == 1);
     assert(next(ecADT, &aux) == 5 && aux == 2);
+    assert(hasNext(ecADT) == 1);
+    assert(next(ecADT, &aux) == 10 && aux == 3);
     assert(next(ecADT, &aux) == 30 && aux == 1);
     assert(hasNext(ecADT) == 0);
     freeElemCount(ecADT);
