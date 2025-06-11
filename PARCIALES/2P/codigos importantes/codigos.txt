@@ -120,3 +120,31 @@ void dequeue(queueADT q, elemtype * out){   // O(1)
         free(aux);
     }        
 }
+
+// COPY STR
+
+static char * copyStr(char * s, int * len){
+    * len = strlen(s) + 1;  // strlen devuelve la cantidad de caracteres sin el 0 final, yo le agrego ese espacio
+    return strcpy(malloc(* len), s);
+}
+
+// COPY DEFF
+
+#define BLOCK 10
+
+staic char * copyDeff(char * s, int * len){
+    int i = 0;
+    char * aux = NULL;
+    while(s[i] != '\0'){
+        if(i % BLOCK == 0){
+            aux = realloc(aux, (i + BLOCK));
+        }
+        aux[i] = s[i++];
+    }
+
+    aux[i++] = '\0';
+    *len = i;           // incluye al '\0'
+    aux = realloc(aux, *len);
+    return aux;
+}
+
