@@ -1,0 +1,46 @@
+INTERSECCION DE DOS LISTAS ORDENAS DE MENOR A MAYOR SIN REPETIDOS
+
+List listIntersec(const List l1, const List l2){
+    if(l1 == NULL || l2 == NULL){
+	return NULL;
+    }
+
+    if(l1->head < l2->head){
+	return listIntersec(l1->tail, l2);		// sigo recorriendo en la lista 1
+    } 
+
+    if(l1->head > l2->head){
+	return listIntersec(l1, l2->head);		// sigo recorriendo en la lista 2
+    } 
+
+    // SON IGUALES
+    List aux = malloc(sizeof(node));
+    aux->head = l1->head;
+    aux->tail = listIntersec(l1->tail, l2->tail);	// sigo recorriendo en ambas listas
+    return aux;
+}
+
+// UNION ENTRE DOS LISTAS ORDENADAS DE MENOR A MAYOR SIN REPETIDOS
+
+List listUnion(List l1, List l2){
+    if(l1 == NULL && l2 == NULL){
+	return NULL;
+    }
+
+    List aux = malloc(sizeof(node));	// siempre voy a agregar algo
+
+    if(l2 != NULL && (l1 == NULL || l1->head > l2->head)){
+	aux->head = l2->head;
+	aux->tail = listUnion(l1, l2->tail);
+    }
+    else if(l2 != NULL && (l2 == NULL || l1->head < l2->head)){
+	aux->head = l1->head;
+	aux->tail = listUnion(l1->tail, l2->tail);
+    }
+    else{	//mismo elemento
+	aux->head = l1->head; 		// da igual el head 
+	aux->tail = listUnion(l1->tail, l2->tail);
+    }
+    return aux;
+}
+
