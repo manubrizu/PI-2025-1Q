@@ -2,15 +2,15 @@ INTERSECCION DE DOS LISTAS ORDENAS DE MENOR A MAYOR SIN REPETIDOS
 
 List listIntersec(const List l1, const List l2){
     if(l1 == NULL || l2 == NULL){
-	return NULL;
+	    return NULL;
     }
 
     if(l1->head < l2->head){
-	return listIntersec(l1->tail, l2);		// sigo recorriendo en la lista 1
+	    return listIntersec(l1->tail, l2);		// sigo recorriendo en la lista 1
     } 
 
     if(l1->head > l2->head){
-	return listIntersec(l1, l2->head);		// sigo recorriendo en la lista 2
+	    return listIntersec(l1, l2->head);		// sigo recorriendo en la lista 2
     } 
 
     // SON IGUALES
@@ -24,23 +24,99 @@ List listIntersec(const List l1, const List l2){
 
 List listUnion(List l1, List l2){
     if(l1 == NULL && l2 == NULL){
-	return NULL;
+	    return NULL;
     }
 
     List aux = malloc(sizeof(node));	// siempre voy a agregar algo
 
     if(l2 != NULL && (l1 == NULL || l1->head > l2->head)){
-	aux->head = l2->head;
-	aux->tail = listUnion(l1, l2->tail);
+        aux->head = l2->head;
+        aux->tail = listUnion(l1, l2->tail);
     }
     else if(l2 != NULL && (l2 == NULL || l1->head < l2->head)){
-	aux->head = l1->head;
-	aux->tail = listUnion(l1->tail, l2->tail);
+        aux->head = l1->head;
+        aux->tail = listUnion(l1->tail, l2->tail);
     }
     else{	//mismo elemento
-	aux->head = l1->head; 		// da igual el head 
-	aux->tail = listUnion(l1->tail, l2->tail);
+        aux->head = l1->head; 		// da igual el head 
+        aux->tail = listUnion(l1->tail, l2->tail);
     }
     return aux;
 }
 
+// RESTA DE DOS LISTAS
+
+List restaList(List l1, List l2){
+    if (isEmpty(l1)) {
+        return l1; // NULL
+    }
+    
+    if (isEmpty(l2) || l1->head < l2->head){
+        List aux = malloc(sizeof(node));
+        aux->head = l1->head;
+        aux->tail = restaList(l1->tail, l2);    // sigo en l1
+        return aux;
+    }
+    
+    if(l1->head > l2->head){
+        return restaList(l1, l2->tail);     // sigo en l2
+    }
+
+    // caso en que sean iguales 
+    return restaList(l1->tail, l2->tail); 
+}
+
+// STACK    solo hay un List first
+// LIFO
+
+void push(stackADT stack, int elem){
+    List aux = malloc(sizeof(node));
+    aux->tail = stack->first;
+    aux->head = elem;
+    stack->first = aux;
+    stack->size++;
+}
+
+int pop(stackADT stack){
+    if(stack == NULL){
+        exit(1); // por gracioso
+    }
+
+    List aux = stack->first;
+    stack->first = aux->tail;   // stack->first = stack->first->tail
+    int foo = aux->head;
+    free(aux);
+
+    stack->size--;
+    return foo;
+}
+
+// QUEUE    hay un List first y un List last
+// FIFO
+
+void queue(queueADT q, elemtype n){         // O(1)
+    List aux = calloc(1, sizeof(node));
+    aux->head = n;    
+    if(q == NULL){
+        q->first= aux;
+        q->last = aux;
+    }
+    else{
+        q->last->tail = aux;
+        q->last = aux;
+    }
+}
+
+void dequeue(queueADT q, elemtype * out){   // O(1)
+    if(q != NULL){
+        List aux = q->first;
+        *out = q->first->head;
+        if(aux == q->last){
+            q->first = q->last = NULL;
+        }
+        else{
+            q->first = q->first->tail;
+        }
+        free(aux);
+    }        
+}

@@ -2,17 +2,17 @@
 #include <stdlib.h>
 #include "./stackdADT.h"
 
-typedef struct stackCDT{
-    struct node * first;
-    int size;
-} stackCDT;
-
 typedef struct node{ 
     int head;
     struct node * tail;
 } node;
 
 typedef node * List;
+
+typedef struct stackCDT{
+    struct node * first;
+    int size;
+} stackCDT;
 
 stackADT newStack(){
     return calloc(1, sizeof(stackCDT));
