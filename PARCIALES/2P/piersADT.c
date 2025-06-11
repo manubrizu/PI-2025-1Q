@@ -4,9 +4,9 @@
 
 
 typedef struct puerto{
-    char * muelles;
-    size_t dim;             // dim del vectorde muelles
-    size_t cantBarcos;     // cantidad de muelles
+    char * muelles;         // el muelle siempre existe  --> 0 amarrado | 1 amarrado
+    size_t dim;             // cantidad de Muelles
+    size_t cantBarcos;     
     char existsP;           // el puerto existe
 }puerto;
 
