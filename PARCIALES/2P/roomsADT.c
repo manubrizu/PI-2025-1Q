@@ -12,9 +12,7 @@ typedef struct node * List;
 typedef struct roomList{    // cola
     List first;
     List actual;
-    List last;
-    char ocupado;
-    size_t contAsistentes;
+    List last;              // NO HACE FALTA UN EXISTS porque si el first es NULL no hay gente esperando
 } roomList;
 
 typedef struct roomsCDT{
@@ -24,9 +22,6 @@ typedef struct roomsCDT{
 } roomsCDT;
 
 roomsADT newRooms(size_t maxRooms){
-    if(maxRooms == 0){
-    	return NULL; 		// ???
-    }
     roomsADT aux = calloc(1, sizeof(roomsCDT));
     aux->vec = calloc(maxRooms, sizeof(roomList));
     aux->maxRooms = maxRooms;
@@ -37,12 +32,10 @@ void reserveRoom(roomsADT rooms, size_t roomNumber, const char * attendee){		// 
     if(roomNumber < rooms->maxRooms){   // si es mayor o igual no hace nada
         List aux = calloc(1, sizeof(node));
         aux->nombre = attendee;
-        rooms->vec[roomNumber].contAsistentes++;
-        if(!rooms->vec[roomNumber].ocupado){
-            rooms->roomsOcupados++;
-            rooms->vec[roomNumber].ocupado = 1;
-        }
         roomList * q = &rooms->vec[roomNumber];
+        if(q->first == NULL){
+            rooms->roomsOcupados++;
+        }
         if(q->first == NULL){
             q->first = aux;
             q->last = aux;
@@ -84,10 +77,8 @@ static char * dequeue(roomList * q){
     if(q != NULL){
         List aux = q->first;
         char * out = q->first->nombre;
-        q->contAsistentes--;
         if(aux == q->last){
             q->first = q->last = NULL;
-            q->ocupado = 0;
         }
         else{
             q->first = q->first->next;
@@ -106,9 +97,9 @@ char ** admitRooms(roomsADT rooms, size_t * admissionResultDim){
     char ** aux = malloc(rooms->roomsOcupados * sizeof(char *));
     size_t cont = 0;
     for(size_t i = 0; i < rooms->maxRooms; ++i){
-        if(rooms->vec[i].ocupado){
+        if(rooms->vec[i].first != NULL){
             aux[cont++] = dequeue(&rooms->vec[i]);
-            if(!rooms->vec[i].ocupado){
+            if(rooms->vec[i].first == NULL){
                 rooms->roomsOcupados--;
             }
         }
@@ -126,10 +117,13 @@ char ** admitRoomsN(roomsADT rooms, size_t * admissionResultDim, size_t n){
     size_t cont = 0;
     for(size_t i = 0; i < rooms->maxRooms; ++i){
         roomList * q = &rooms->vec[i];
-        if(q->ocupado){
-            for(size_t j = 0; j < n && q->contAsistentes > 0; j++){
+        if(q->first != NULL){
+            for(size_t j = 0; j < n && q->first != NULL; j++){
                 aux[cont++] = dequeue(q);
             }            
+            if(q->first == NULL){
+                rooms->roomsOcupados--;
+            }
         }
     }
     *admissionResultDim = cont;
