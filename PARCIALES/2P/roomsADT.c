@@ -37,8 +37,7 @@ void reserveRoom(roomsADT rooms, size_t roomNumber, const char * attendee){		// 
             rooms->roomsOcupados++;
         }
         if(q->first == NULL){
-            q->first = aux;
-            q->last = aux;
+            q->first = q->last = aux;            
         }
         else{
             q->last->next = aux;

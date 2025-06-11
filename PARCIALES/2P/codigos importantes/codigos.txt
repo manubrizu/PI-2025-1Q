@@ -98,8 +98,8 @@ void queue(queueADT q, elemtype n){         // O(1)
     List aux = calloc(1, sizeof(node));
     aux->head = n;    
     if(q == NULL){
-        q->first= aux;
-        q->last = aux;
+        q->first = q->last = aux;
+        
     }
     else{
         q->last->tail = aux;
