@@ -97,7 +97,7 @@ int pop(stackADT stack){
 void queue(queueADT q, elemtype n){         // O(1)
     List aux = calloc(1, sizeof(node));
     aux->head = n;    
-    if(q == NULL){
+    if(q->first == NULL){
         q->first = q->last = aux;
         
     }

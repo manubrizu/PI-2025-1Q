@@ -30,7 +30,7 @@ balanceList balance(docList l1){
         balanceList aux = malloc(sizeof(docNode));
         aux->id = l1->id;
         aux->tail = lAux;
-        aux->balance += l1->amount;
+        aux->balance = l1->amount;      // como arranca el 0, directamente le asigno l1->amount
         return aux;
     }
     
