@@ -17,7 +17,7 @@ typedef struct node{
 typedef struct node * List;
 
 typedef struct words {
-    struct node * first;
+    List first;
     size_t deffCount;
 } words;
 

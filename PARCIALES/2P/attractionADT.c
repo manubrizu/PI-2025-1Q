@@ -29,6 +29,22 @@ static char * copyStr(char * s){
     return strcpy(malloc(strlen(s) + 1), s);
 }
 
+void addVisitor(attractionADT att, size_t hour, const char * visitor){
+    if(hour < HOURS){
+        List aux = malloc(sizeof(node));
+        aux->nombre = copyStr(visitor);
+        queue * q = &att->vec[hour];
+
+        if(q->first == NULL){
+            q->first = q->last = aux;
+        }
+        else{
+            q->last->next = aux;
+            q->last = aux;
+        }        
+    }
+}
+
 char * rideVisitor(attractionADT att, size_t hour){
     if(hour >= HOURS || att->vec[hour].first == NULL){
         return NULL;
