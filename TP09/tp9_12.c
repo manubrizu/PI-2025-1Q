@@ -37,5 +37,4 @@ int balance(const char *s){
     }
 
     return balance(s+1);
-
 }

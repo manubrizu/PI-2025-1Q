@@ -32,7 +32,7 @@ void push(stackADT stack, int elem){
 
 int pop(stackADT stack){
     if(isEmpy(stack)){
-        exit(1);
+        exit(1);    // por gracioso
     }
     List aux = stack->first;
     stack->first = aux->tail;
